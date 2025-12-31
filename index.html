@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial Interactivo de Tkinter</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+        
+        .code-block code {
+            display: block;
+            white-space: pre;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .keyword {
+            color: #569cd6;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .function {
+            color: #dcdcaa;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .exercise-box {
+            border-left: 4px solid #4a90e2;
+            background: #f0f7ff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box {
+            border-left: 4px solid #34d399;
+            background: #f0fdf4;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            border-left: 4px solid #fbbf24;
+            background: #fffbeb;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .nav-section {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-section:hover {
+            background: #f3f4f6;
+        }
+        
+        .nav-section.active {
+            background: #e0e7ff;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .param-table th,
+        .param-table td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .param-table th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #34d399);
+            transition: width 0.3s ease;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="h-full w-full flex flex-col" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><!-- Header -->
+   <header class="text-white py-8 px-6 shadow-lg">
+    <div class="max-w-7xl mx-auto">
+     <h1 id="main-title" class="text-4xl font-bold mb-2">Tutorial Interactivo de Tkinter</h1>
+     <p id="subtitle" class="text-xl opacity-90">Aprende a crear interfaces gráficas con Python</p>
+     <div class="progress-bar mt-4">
+      <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+     </div>
+     <p id="progress-text" class="text-sm mt-2 opacity-75">Progreso: 0% completado</p>
+    </div>
+   </header><!-- Main Content -->
+   <div class="flex-1 flex overflow-hidden"><!-- Sidebar Navigation -->
+    <aside class="w-80 bg-white shadow-lg overflow-y-auto">
+     <nav class="p-4">
+      <h2 class="text-lg font-bold text-gray-800 mb-4 px-3">📚 Contenido del Curso</h2>
+      <div class="nav-section active px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('intro')">
+       <div class="font-semibold text-gray-800">
+        1. Introducción a Tkinter
+       </div>
+       <div class="text-sm text-gray-600">
+        ¿Qué es Tkinter?
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('eventos')">
+       <div class="font-semibold text-gray-800">
+        2. Programación Orientada a Eventos
+       </div>
+       <div class="text-sm text-gray-600">
+        Conceptos fundamentales
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('ventanas')">
+       <div class="font-semibold text-gray-800">
+        3. Ventanas y Configuración
+       </div>
+       <div class="text-sm text-gray-600">
+        Tk(), title(), geometry()
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('contenedores')">
+       <div class="font-semibold text-gray-800">
+        4. Contenedores
+       </div>
+       <div class="text-sm text-gray-600">
+        Frame, LabelFrame, PanedWindow
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('widgets-basicos')">
+       <div class="font-semibold text-gray-800">
+        5. Widgets Básicos
+       </div>
+       <div class="text-sm text-gray-600">
+        Label, Button, Entry, Text
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('widgets-avanzados')">
+       <div class="font-semibold text-gray-800">
+        6. Widgets Avanzados
+       </div>
+       <div class="text-sm text-gray-600">
+        Listbox, Canvas, Menu
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('eventos-callbacks')">
+       <div class="font-semibold text-gray-800">
+        7. Eventos y Callbacks
+       </div>
+       <div class="text-sm text-gray-600">
+        bind(), command, eventos del teclado
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('geometria')">
+       <div class="font-semibold text-gray-800">
+        8. Gestores de Geometría
+       </div>
+       <div class="text-sm text-gray-600">
+        pack(), grid(), place()
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('variables')">
+       <div class="font-semibold text-gray-800">
+        9. Variables de Control
+       </div>
+       <div class="text-sm text-gray-600">
+        StringVar, IntVar, BooleanVar
+       </div>
+      </div>
+      <div class="nav-section px-3 py-3 rounded-lg cursor-pointer mb-2" onclick="showSection('proyectos')">
+       <div class="font-semibold text-gray-800">
+        10. Mini Proyectos
+       </div>
+       <div class="text-sm text-gray-600">
+        Aplicaciones prácticas
+       </div>
+      </div>
+     </nav>
+    </aside><!-- Content Area -->
+    <main class="flex-1 bg-gray-50 overflow-y-auto p-8">
+     <div class="max-w-4xl mx-auto"><!-- Section 1: Introducción -->
+      <section id="intro" class="content-section active bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">1. Introducción a Tkinter</h2>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">¿Qué es Tkinter?</h3>
+       <p class="text-gray-700 mb-4 leading-relaxed">Tkinter es la biblioteca estándar de Python para crear interfaces gráficas de usuario (GUI). Viene incluida con Python, por lo que no necesitas instalar nada adicional. Es perfecta para crear aplicaciones de escritorio con ventanas, botones, campos de texto y más.</p>
+       <div class="tip-box"><strong>💡 ¿Por qué aprender Tkinter?</strong>
+        <ul class="list-disc ml-6 mt-2">
+         <li>Viene incluido con Python (no requiere instalación)</li>
+         <li>Fácil de aprender para principiantes</li>
+         <li>Multiplataforma (Windows, Mac, Linux)</li>
+         <li>Ideal para aplicaciones de escritorio simples</li>
+        </ul>
+       </div>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Tu Primera Ventana</h3>
+       <p class="text-gray-700 mb-4">Comencemos con el programa más simple en Tkinter:</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk  <span class="comment"># Importamos la librería</span>
+
+<span class="comment"># Creamos la ventana principal</span>
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Configuramos el título de la ventana</span>
+ventana.<span class="function">title</span>(<span class="string">"Mi Primera Ventana"</span>)
+
+<span class="comment"># Configuramos el tamaño: ancho x alto</span>
+ventana.<span class="function">geometry</span>(<span class="string">"400x300"</span>)
+
+<span class="comment"># Iniciamos el bucle de eventos (mantiene la ventana abierta)</span>
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h4 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Explicación línea por línea:</h4>
+       <ul class="list-disc ml-6 text-gray-700 space-y-2">
+        <li><strong>import tkinter as tk:</strong> Importamos la librería con un alias corto</li>
+        <li><strong>tk.Tk():</strong> Crea la ventana principal de la aplicación</li>
+        <li><strong>title():</strong> Establece el texto que aparece en la barra de título</li>
+        <li><strong>geometry():</strong> Define el tamaño de la ventana (ancho x alto en píxeles)</li>
+        <li><strong>mainloop():</strong> Inicia el bucle que mantiene la ventana abierta y responde a eventos</li>
+       </ul>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 1</h4>
+        <p class="text-gray-700 mb-2">Modifica el código anterior para crear una ventana que:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Tenga el título "Calculadora Simple"</li>
+         <li>Mida 500x400 píxeles</li>
+         <li>Ejecuta el código y observa el resultado</li>
+        </ul>
+       </div>
+       <div class="warning-box"><strong>⚠️ Importante:</strong> Siempre debes llamar a <code>mainloop()</code> al final. Sin esta línea, la ventana se cerrará inmediatamente.
+       </div>
+      </section><!-- Section 2: Eventos -->
+      <section id="eventos" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">2. Programación Orientada a Eventos</h2>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">¿Qué es un Evento?</h3>
+       <p class="text-gray-700 mb-4 leading-relaxed">En una aplicación con GUI, un evento es cualquier acción del usuario: hacer clic en un botón, escribir en un campo, mover el mouse, etc. Tu programa "escucha" estos eventos y responde a ellos.</p>
+       <div class="tip-box"><strong>💡 Concepto Clave: Event Loop (Bucle de Eventos)</strong>
+        <p class="mt-2">El <code>mainloop()</code> crea un bucle infinito que constantemente verifica si hay eventos (clics, teclas presionadas, etc.) y ejecuta el código correspondiente cuando ocurren.</p>
+       </div>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Ejemplo con un Botón</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+<span class="comment"># Función que se ejecuta cuando se presiona el botón</span>
+<span class="keyword">def</span> <span class="function">saludar</span>():
+    <span class="function">print</span>(<span class="string">"¡Hola! Has hecho clic en el botón"</span>)
+
+ventana = tk.<span class="function">Tk</span>()
+ventana.<span class="function">title</span>(<span class="string">"Eventos en Tkinter"</span>)
+ventana.<span class="function">geometry</span>(<span class="string">"300x200"</span>)
+
+<span class="comment"># Creamos un botón y le asociamos la función saludar</span>
+<span class="comment"># command= indica qué función ejecutar al hacer clic</span>
+boton = tk.<span class="function">Button</span>(ventana, 
+                   text=<span class="string">"Haz clic aquí"</span>,
+                   command=saludar)
+<span class="comment"># pack() coloca el botón en la ventana, pady=50 añade espacio vertical</span>
+<span class="comment"># (aprenderás más sobre pack en la sección 8)</span>
+boton.<span class="function">pack</span>(pady=<span class="number">50</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h4 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Conceptos Importantes:</h4>
+       <ul class="list-disc ml-6 text-gray-700 space-y-2">
+        <li><strong>Callback:</strong> Una función que se ejecuta en respuesta a un evento</li>
+        <li><strong>command=:</strong> Parámetro que vincula un botón con una función callback</li>
+        <li><strong>No usar paréntesis:</strong> Escribimos <code>command=saludar</code>, NO <code>command=saludar()</code></li>
+       </ul>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 2</h4>
+        <p class="text-gray-700 mb-2">Crea una aplicación con dos botones:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Un botón "Incrementar" que imprima un número creciente cada vez</li>
+         <li>Un botón "Reiniciar" que vuelva el contador a 0</li>
+         <li>Pista: Usa una variable global para el contador</li>
+        </ul>
+       </div>
+      </section><!-- Section 3: Ventanas -->
+      <section id="ventanas" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">3. Ventanas y Configuración</h2>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Métodos Principales de Tk()</h3>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Método</th>
+          <th>Descripción</th>
+          <th>Ejemplo</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>title()</code></td>
+          <td>Establece el título de la ventana</td>
+          <td><code>ventana.title("Mi App")</code></td>
+         </tr>
+         <tr>
+          <td><code>geometry()</code></td>
+          <td>Define tamaño y posición</td>
+          <td><code>ventana.geometry("400x300+100+50")</code></td>
+         </tr>
+         <tr>
+          <td><code>resizable()</code></td>
+          <td>Permite/bloquea redimensionar</td>
+          <td><code>ventana.resizable(False, False)</code></td>
+         </tr>
+         <tr>
+          <td><code>minsize()</code></td>
+          <td>Tamaño mínimo</td>
+          <td><code>ventana.minsize(300, 200)</code></td>
+         </tr>
+         <tr>
+          <td><code>maxsize()</code></td>
+          <td>Tamaño máximo</td>
+          <td><code>ventana.maxsize(800, 600)</code></td>
+         </tr>
+         <tr>
+          <td><code>config()</code></td>
+          <td>Configura color de fondo</td>
+          <td><code>ventana.config(bg="lightblue")</code></td>
+         </tr>
+        </tbody>
+       </table>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Ejemplo Completo</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Configuración básica</span>
+ventana.<span class="function">title</span>(<span class="string">"Ventana Configurada"</span>)
+
+<span class="comment"># geometry: "anchoxalto+posX+posY"</span>
+<span class="comment"># 500x400 = tamaño, +200+100 = posición en pantalla</span>
+ventana.<span class="function">geometry</span>(<span class="string">"500x400+200+100"</span>)
+
+<span class="comment"># Evitar que el usuario cambie el tamaño</span>
+ventana.<span class="function">resizable</span>(<span class="keyword">False</span>, <span class="keyword">False</span>)
+
+<span class="comment"># Color de fondo de la ventana</span>
+ventana.<span class="function">config</span>(bg=<span class="string">"#f0f0f0"</span>)
+
+<span class="comment"># Establecer tamaños mínimo y máximo</span>
+ventana.<span class="function">minsize</span>(<span class="number">400</span>, <span class="number">300</span>)
+ventana.<span class="function">maxsize</span>(<span class="number">800</span>, <span class="number">600</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="tip-box"><strong>💡 Formato de geometry():</strong>
+        <ul class="list-disc ml-6 mt-2">
+         <li><code>"500x400"</code> - Solo tamaño</li>
+         <li><code>"500x400+100+50"</code> - Tamaño y posición (100px desde izq, 50px desde arriba)</li>
+        </ul>
+       </div>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 3</h4>
+        <p class="text-gray-700 mb-2">Crea una ventana que:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Tenga un fondo de color verde claro (#90EE90)</li>
+         <li>Mida 600x500 píxeles</li>
+         <li>No se pueda redimensionar</li>
+         <li>Aparezca centrada en la pantalla (usa +300+150 aproximadamente)</li>
+        </ul>
+       </div>
+      </section><!-- Section 4: Contenedores -->
+      <section id="contenedores" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">4. Contenedores</h2>
+       <div class="tip-box"><strong>💡 ¿Qué es un Widget?</strong>
+        <p class="mt-2">Un widget es cualquier elemento visual en Tkinter: botones, etiquetas, campos de texto, etc. Piensa en ellos como los "bloques de construcción" de tu interfaz gráfica.</p>
+       </div>
+       <p class="text-gray-700 mb-4 leading-relaxed">Los contenedores son widgets especiales que pueden contener otros widgets dentro. Son fundamentales para organizar tu interfaz de manera lógica y estructurada.</p>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Frame - Contenedor Básico</h3>
+       <p class="text-gray-700 mb-4">Un Frame es un rectángulo invisible que agrupa otros widgets. Es útil para organizar la interfaz.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Parámetro</th>
+          <th>Descripción</th>
+          <th>Ejemplo</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>master</code></td>
+          <td>Ventana o contenedor padre</td>
+          <td><code>Frame(ventana)</code></td>
+         </tr>
+         <tr>
+          <td><code>bg/background</code></td>
+          <td>Color de fondo</td>
+          <td><code>bg="lightgray"</code></td>
+         </tr>
+         <tr>
+          <td><code>width/height</code></td>
+          <td>Ancho y alto en píxeles</td>
+          <td><code>width=300, height=200</code></td>
+         </tr>
+         <tr>
+          <td><code>relief</code></td>
+          <td>Estilo del borde</td>
+          <td><code>relief="raised"</code></td>
+         </tr>
+         <tr>
+          <td><code>borderwidth</code></td>
+          <td>Grosor del borde</td>
+          <td><code>borderwidth=2</code></td>
+         </tr>
+        </tbody>
+       </table>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+ventana.<span class="function">title</span>(<span class="string">"Usando Frames"</span>)
+ventana.<span class="function">geometry</span>(<span class="string">"400x300"</span>)
+
+<span class="comment"># Frame superior con fondo azul claro</span>
+frame_superior = tk.<span class="function">Frame</span>(ventana, 
+                              bg=<span class="string">"lightblue"</span>,
+                              height=<span class="number">100</span>)
+frame_superior.<span class="function">pack</span>(fill=<span class="string">"x"</span>)
+
+<span class="comment"># Añadimos widgets al frame</span>
+etiqueta = tk.<span class="function">Label</span>(frame_superior, 
+                      text=<span class="string">"Esto está en el frame superior"</span>,
+                      bg=<span class="string">"lightblue"</span>)
+etiqueta.<span class="function">pack</span>(pady=<span class="number">20</span>)
+
+<span class="comment"># Frame inferior con fondo verde claro</span>
+frame_inferior = tk.<span class="function">Frame</span>(ventana,
+                               bg=<span class="string">"lightgreen"</span>)
+frame_inferior.<span class="function">pack</span>(fill=<span class="string">"both"</span>, expand=<span class="keyword">True</span>)
+
+boton = tk.<span class="function">Button</span>(frame_inferior,
+                   text=<span class="string">"Botón en frame inferior"</span>)
+boton.<span class="function">pack</span>(pady=<span class="number">30</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">LabelFrame - Frame con Etiqueta</h3>
+       <p class="text-gray-700 mb-4">Similar a Frame, pero con un título visible. Ideal para agrupar opciones relacionadas.</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+ventana.<span class="function">geometry</span>(<span class="string">"400x300"</span>)
+
+<span class="comment"># LabelFrame con título "Datos Personales"</span>
+labelframe = tk.<span class="function">LabelFrame</span>(ventana,
+                            text=<span class="string">"Datos Personales"</span>,
+                            padx=<span class="number">20</span>, pady=<span class="number">20</span>,
+                            font=(<span class="string">"Arial"</span>, <span class="number">12</span>, <span class="string">"bold"</span>))
+labelframe.<span class="function">pack</span>(padx=<span class="number">20</span>, pady=<span class="number">20</span>)
+
+<span class="comment"># Widgets dentro del LabelFrame</span>
+tk.<span class="function">Label</span>(labelframe, text=<span class="string">"Nombre:"</span>).<span class="function">grid</span>(row=<span class="number">0</span>, column=<span class="number">0</span>)
+tk.<span class="function">Entry</span>(labelframe).<span class="function">grid</span>(row=<span class="number">0</span>, column=<span class="number">1</span>)
+
+tk.<span class="function">Label</span>(labelframe, text=<span class="string">"Edad:"</span>).<span class="function">grid</span>(row=<span class="number">1</span>, column=<span class="number">0</span>)
+tk.<span class="function">Entry</span>(labelframe).<span class="function">grid</span>(row=<span class="number">1</span>, column=<span class="number">1</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 4</h4>
+        <p class="text-gray-700 mb-2">Crea una ventana con tres frames horizontales:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Frame superior: con fondo rojo y un Label "Encabezado"</li>
+         <li>Frame central: con fondo blanco y dos botones</li>
+         <li>Frame inferior: con fondo azul y un Label "Pie de página"</li>
+        </ul>
+       </div>
+      </section><!-- Section 5: Widgets Básicos -->
+      <section id="widgets-basicos" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">5. Widgets Básicos</h2>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Label - Etiquetas de Texto</h3>
+       <p class="text-gray-700 mb-4">Muestra texto o imágenes. No es interactivo.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Parámetro</th>
+          <th>Descripción</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>text</code></td>
+          <td>Texto a mostrar</td>
+         </tr>
+         <tr>
+          <td><code>font</code></td>
+          <td>Tupla: (familia, tamaño, estilo)</td>
+         </tr>
+         <tr>
+          <td><code>fg/foreground</code></td>
+          <td>Color del texto</td>
+         </tr>
+         <tr>
+          <td><code>bg/background</code></td>
+          <td>Color de fondo</td>
+         </tr>
+         <tr>
+          <td><code>width/height</code></td>
+          <td>Ancho y alto (en caracteres)</td>
+         </tr>
+        </tbody>
+       </table>
+       <pre class="code-block"><code>etiqueta = tk.<span class="function">Label</span>(ventana,
+                     text=<span class="string">"¡Hola Mundo!"</span>,
+                     font=(<span class="string">"Arial"</span>, <span class="number">16</span>, <span class="string">"bold"</span>),
+                     fg=<span class="string">"blue"</span>,
+                     bg=<span class="string">"yellow"</span>)
+etiqueta.<span class="function">pack</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Button - Botones</h3>
+       <p class="text-gray-700 mb-4">Ejecuta una acción cuando se hace clic.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Parámetro</th>
+          <th>Descripción</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>text</code></td>
+          <td>Texto del botón</td>
+         </tr>
+         <tr>
+          <td><code>command</code></td>
+          <td>Función a ejecutar al hacer clic</td>
+         </tr>
+         <tr>
+          <td><code>width/height</code></td>
+          <td>Tamaño del botón</td>
+         </tr>
+         <tr>
+          <td><code>state</code></td>
+          <td>"normal" o "disabled" (activo/desactivado)</td>
+         </tr>
+         <tr>
+          <td><code>relief</code></td>
+          <td>Estilo: "flat", "raised", "sunken"</td>
+         </tr>
+        </tbody>
+       </table>
+       <pre class="code-block"><code><span class="keyword">def</span> <span class="function">accion</span>():
+    <span class="function">print</span>(<span class="string">"¡Botón presionado!"</span>)
+
+boton = tk.<span class="function">Button</span>(ventana,
+                   text=<span class="string">"Presióname"</span>,
+                   command=accion,
+                   width=<span class="number">15</span>,
+                   bg=<span class="string">"green"</span>,
+                   fg=<span class="string">"white"</span>)
+boton.<span class="function">pack</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Entry - Campos de Texto</h3>
+       <p class="text-gray-700 mb-4">Permite al usuario escribir una línea de texto.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Parámetro/Método</th>
+          <th>Descripción</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>width</code></td>
+          <td>Ancho en caracteres</td>
+         </tr>
+         <tr>
+          <td><code>show</code></td>
+          <td>Carácter para ocultar texto (ej: "*" para contraseñas)</td>
+         </tr>
+         <tr>
+          <td><code>get()</code></td>
+          <td>Obtiene el texto escrito</td>
+         </tr>
+         <tr>
+          <td><code>insert()</code></td>
+          <td>Inserta texto en una posición</td>
+         </tr>
+         <tr>
+          <td><code>delete()</code></td>
+          <td>Borra texto</td>
+         </tr>
+        </tbody>
+       </table>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+<span class="keyword">def</span> <span class="function">mostrar_texto</span>():
+    texto = entrada.<span class="function">get</span>()  <span class="comment"># Obtener el texto</span>
+    etiqueta.<span class="function">config</span>(text=<span class="string">f"Escribiste: {texto}"</span>)
+
+ventana = tk.<span class="function">Tk</span>()
+
+entrada = tk.<span class="function">Entry</span>(ventana, width=<span class="number">30</span>)
+entrada.<span class="function">pack</span>(pady=<span class="number">10</span>)
+
+boton = tk.<span class="function">Button</span>(ventana, text=<span class="string">"Mostrar"</span>, command=mostrar_texto)
+boton.<span class="function">pack</span>()
+
+etiqueta = tk.<span class="function">Label</span>(ventana, text=<span class="string">""</span>)
+etiqueta.<span class="function">pack</span>(pady=<span class="number">10</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Text - Área de Texto Multilínea</h3>
+       <p class="text-gray-700 mb-4">Para escribir y editar múltiples líneas de texto.</p>
+       <pre class="code-block"><code><span class="comment"># Crear widget Text</span>
+texto = tk.<span class="function">Text</span>(ventana, 
+               width=<span class="number">40</span>,    <span class="comment"># Ancho en caracteres</span>
+               height=<span class="number">10</span>,   <span class="comment"># Alto en líneas</span>
+               wrap=<span class="string">"word"</span>)  <span class="comment"># Ajuste de línea por palabra</span>
+texto.<span class="function">pack</span>()
+
+<span class="comment"># Métodos principales:</span>
+texto.<span class="function">insert</span>(<span class="string">"1.0"</span>, <span class="string">"Texto inicial"</span>)  <span class="comment"># Insertar en línea 1, pos 0</span>
+contenido = texto.<span class="function">get</span>(<span class="string">"1.0"</span>, <span class="string">"end"</span>)  <span class="comment"># Obtener todo el texto</span>
+texto.<span class="function">delete</span>(<span class="string">"1.0"</span>, <span class="string">"end"</span>)        <span class="comment"># Borrar todo</span>
+</code></pre>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 5: Mini Formulario</h4>
+        <p class="text-gray-700 mb-2">Crea un formulario de registro con:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Label y Entry para "Nombre de usuario"</li>
+         <li>Label y Entry para "Contraseña" (usando show="*")</li>
+         <li>Un botón "Registrar" que imprima los valores ingresados</li>
+         <li>Organiza todo usando grid()</li>
+        </ul>
+       </div>
+      </section><!-- Section 6: Widgets Avanzados -->
+      <section id="widgets-avanzados" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">6. Widgets Avanzados</h2>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Checkbutton - Casillas de Verificación</h3>
+       <p class="text-gray-700 mb-4">Permite seleccionar múltiples opciones.</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Variables para almacenar el estado (True/False)</span>
+var_python = tk.<span class="function">BooleanVar</span>()
+var_java = tk.<span class="function">BooleanVar</span>()
+
+<span class="comment"># Crear checkbuttons</span>
+check1 = tk.<span class="function">Checkbutton</span>(ventana,
+                          text=<span class="string">"Python"</span>,
+                          variable=var_python)
+check1.<span class="function">pack</span>()
+
+check2 = tk.<span class="function">Checkbutton</span>(ventana,
+                          text=<span class="string">"Java"</span>,
+                          variable=var_java)
+check2.<span class="function">pack</span>()
+
+<span class="keyword">def</span> <span class="function">mostrar_seleccion</span>():
+    <span class="function">print</span>(<span class="string">f"Python: {var_python.get()}"</span>)
+    <span class="function">print</span>(<span class="string">f"Java: {var_java.get()}"</span>)
+
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Verificar"</span>, command=mostrar_seleccion).<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Radiobutton - Botones de Radio</h3>
+       <p class="text-gray-700 mb-4">Permite seleccionar UNA opción entre varias.</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Variable compartida por todos los radiobuttons</span>
+opcion = tk.<span class="function">StringVar</span>()
+opcion.<span class="function">set</span>(<span class="string">"1"</span>)  <span class="comment"># Valor inicial</span>
+
+<span class="comment"># Cada radiobutton tiene un value único</span>
+tk.<span class="function">Radiobutton</span>(ventana, 
+               text=<span class="string">"Opción 1"</span>,
+               variable=opcion,
+               value=<span class="string">"1"</span>).<span class="function">pack</span>()
+
+tk.<span class="function">Radiobutton</span>(ventana,
+               text=<span class="string">"Opción 2"</span>,
+               variable=opcion,
+               value=<span class="string">"2"</span>).<span class="function">pack</span>()
+
+tk.<span class="function">Radiobutton</span>(ventana,
+               text=<span class="string">"Opción 3"</span>,
+               variable=opcion,
+               value=<span class="string">"3"</span>).<span class="function">pack</span>()
+
+<span class="keyword">def</span> <span class="function">mostrar</span>():
+    <span class="function">print</span>(<span class="string">f"Seleccionaste: {opcion.get()}"</span>)
+
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Ver selección"</span>, command=mostrar).<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Listbox - Lista de Elementos</h3>
+       <p class="text-gray-700 mb-4">Muestra una lista de items que se pueden seleccionar.</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Crear Listbox</span>
+listbox = tk.<span class="function">Listbox</span>(ventana, height=<span class="number">5</span>)
+listbox.<span class="function">pack</span>(pady=<span class="number">10</span>)
+
+<span class="comment"># Agregar elementos</span>
+frutas = [<span class="string">"Manzana"</span>, <span class="string">"Banana"</span>, <span class="string">"Naranja"</span>, <span class="string">"Uva"</span>, <span class="string">"Pera"</span>]
+<span class="keyword">for</span> fruta <span class="keyword">in</span> frutas:
+    listbox.<span class="function">insert</span>(tk.END, fruta)
+
+<span class="keyword">def</span> <span class="function">obtener_seleccion</span>():
+    seleccion = listbox.<span class="function">curselection</span>()
+    <span class="keyword">if</span> seleccion:
+        indice = seleccion[<span class="number">0</span>]
+        fruta = listbox.<span class="function">get</span>(indice)
+        <span class="function">print</span>(<span class="string">f"Seleccionaste: {fruta}"</span>)
+
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Mostrar"</span>, command=obtener_seleccion).<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Scale - Control Deslizante</h3>
+       <p class="text-gray-700 mb-4">Permite seleccionar un valor numérico arrastrando.</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="keyword">def</span> <span class="function">actualizar_valor</span>(valor):
+    etiqueta.<span class="function">config</span>(text=<span class="string">f"Valor: {valor}"</span>)
+
+<span class="comment"># Parámetros: from_ (mínimo), to (máximo), orient, command</span>
+escala = tk.<span class="function">Scale</span>(ventana, 
+                   from_=<span class="number">0</span>, 
+                   to=<span class="number">100</span>, 
+                   orient=<span class="string">"horizontal"</span>, 
+                   command=actualizar_valor, 
+                   length=<span class="number">300</span>)
+escala.<span class="function">pack</span>(pady=<span class="number">20</span>)
+
+etiqueta = tk.<span class="function">Label</span>(ventana, text=<span class="string">"Valor: 0"</span>)
+etiqueta.<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 6: Selector de Pizza</h4>
+        <p class="text-gray-700 mb-2">Crea una aplicación con:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Radiobuttons para elegir tamaño (Pequeña, Mediana, Grande)</li>
+         <li>Checkbuttons para ingredientes extra (Pepperoni, Champiñones, Extra Queso)</li>
+         <li>Un botón "Ordenar" que muestre el tamaño y los ingredientes seleccionados</li>
+        </ul>
+       </div>
+      </section><!-- Section 7: Eventos y Callbacks -->
+      <section id="eventos-callbacks" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">7. Eventos y Callbacks</h2>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">El Método bind()</h3>
+       <p class="text-gray-700 mb-4">bind() permite capturar eventos como clics, teclas, movimientos del mouse, etc.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Evento</th>
+          <th>Descripción</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>&lt;Button-1&gt;</code></td>
+          <td>Clic izquierdo del mouse</td>
+         </tr>
+         <tr>
+          <td><code>&lt;Button-3&gt;</code></td>
+          <td>Clic derecho del mouse</td>
+         </tr>
+         <tr>
+          <td><code>&lt;Return&gt;</code></td>
+          <td>Tecla Enter</td>
+         </tr>
+         <tr>
+          <td><code>&lt;Key&gt;</code></td>
+          <td>Cualquier tecla</td>
+         </tr>
+         <tr>
+          <td><code>&lt;Motion&gt;</code></td>
+          <td>Movimiento del mouse</td>
+         </tr>
+         <tr>
+          <td><code>&lt;Enter&gt;</code></td>
+          <td>Mouse entra al widget</td>
+         </tr>
+         <tr>
+          <td><code>&lt;Leave&gt;</code></td>
+          <td>Mouse sale del widget</td>
+         </tr>
+        </tbody>
+       </table>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Ejemplo: Eventos del Mouse</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+etiqueta = tk.<span class="function">Label</span>(ventana,
+                   text=<span class="string">"Haz clic o pasa el mouse aquí"</span>,
+                   width=<span class="number">30</span>, height=<span class="number">5</span>,
+                   bg=<span class="string">"lightblue"</span>)
+etiqueta.<span class="function">pack</span>(pady=<span class="number">20</span>)
+
+<span class="comment"># El parámetro 'event' contiene información del evento</span>
+<span class="keyword">def</span> <span class="function">al_hacer_clic</span>(event):
+    etiqueta.<span class="function">config</span>(text=<span class="string">f"¡Clic en x={event.x}, y={event.y}!"</span>)
+
+<span class="keyword">def</span> <span class="function">al_entrar</span>(event):
+    etiqueta.<span class="function">config</span>(bg=<span class="string">"lightgreen"</span>)
+
+<span class="keyword">def</span> <span class="function">al_salir</span>(event):
+    etiqueta.<span class="function">config</span>(bg=<span class="string">"lightblue"</span>)
+
+<span class="comment"># Vincular eventos con funciones</span>
+etiqueta.<span class="function">bind</span>(<span class="string">"&lt;Button-1&gt;"</span>, al_hacer_clic)
+etiqueta.<span class="function">bind</span>(<span class="string">"&lt;Enter&gt;"</span>, al_entrar)
+etiqueta.<span class="function">bind</span>(<span class="string">"&lt;Leave&gt;"</span>, al_salir)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Eventos del Teclado</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+ventana.<span class="function">geometry</span>(<span class="string">"400x200"</span>)
+
+etiqueta = tk.<span class="function">Label</span>(ventana, 
+                   text=<span class="string">"Presiona cualquier tecla"</span>,
+                   font=(<span class="string">"Arial"</span>, <span class="number">14</span>))
+etiqueta.<span class="function">pack</span>(pady=<span class="number">50</span>)
+
+<span class="keyword">def</span> <span class="function">tecla_presionada</span>(event):
+    <span class="comment"># event.char: el carácter presionado</span>
+    <span class="comment"># event.keysym: nombre de la tecla</span>
+    etiqueta.<span class="function">config</span>(text=<span class="string">f"Presionaste: {event.keysym}"</span>)
+
+<span class="comment"># Vincular evento a toda la ventana</span>
+ventana.<span class="function">bind</span>(<span class="string">"&lt;Key&gt;"</span>, tecla_presionada)
+
+<span class="comment"># Eventos específicos</span>
+<span class="keyword">def</span> <span class="function">enter_presionado</span>(event):
+    etiqueta.<span class="function">config</span>(text=<span class="string">"¡Presionaste Enter!"</span>)
+
+ventana.<span class="function">bind</span>(<span class="string">"&lt;Return&gt;"</span>, enter_presionado)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Pasar Argumentos a Callbacks</h3>
+       <p class="text-gray-700 mb-4">Para pasar argumentos adicionales, usa funciones lambda:</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+<span class="keyword">def</span> <span class="function">saludar</span>(nombre):
+    <span class="function">print</span>(<span class="string">f"Hola, {nombre}!"</span>)
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Usar lambda para pasar argumentos</span>
+boton1 = tk.<span class="function">Button</span>(ventana,
+                    text=<span class="string">"Saludar a Juan"</span>,
+                    command=<span class="keyword">lambda</span>: saludar(<span class="string">"Juan"</span>))
+boton1.<span class="function">pack</span>()
+
+boton2 = tk.<span class="function">Button</span>(ventana,
+                    text=<span class="string">"Saludar a María"</span>,
+                    command=<span class="keyword">lambda</span>: saludar(<span class="string">"María"</span>))
+boton2.<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 7: Juego de Teclas</h4>
+        <p class="text-gray-700 mb-2">Crea una aplicación que:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Muestre un Label grande en el centro</li>
+         <li>Cambie su color de fondo cuando presiones las teclas r (rojo), g (verde), b (azul)</li>
+         <li>Muestre un mensaje cuando presiones ESC: "¡Juego terminado!"</li>
+        </ul>
+       </div>
+      </section><!-- Section 8: Gestores de Geometría -->
+      <section id="geometria" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">8. Gestores de Geometría</h2>
+       <p class="text-gray-700 mb-4 leading-relaxed">Los gestores de geometría controlan cómo se posicionan y dimensionan los widgets. Tkinter tiene tres: pack(), grid() y place().</p>
+       <div class="warning-box"><strong>⚠️ Regla Importante:</strong> NO mezcles pack() y grid() en el mismo contenedor padre. Elige uno y úsalo consistentemente.
+       </div>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">1. pack() - Empaquetado Simple</h3>
+       <p class="text-gray-700 mb-4">Organiza widgets en bloques verticales u horizontales. Es el más simple.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Parámetro</th>
+          <th>Valores</th>
+          <th>Descripción</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>side</code></td>
+          <td>"top", "bottom", "left", "right"</td>
+          <td>Lado donde se coloca</td>
+         </tr>
+         <tr>
+          <td><code>fill</code></td>
+          <td>"x", "y", "both", "none"</td>
+          <td>Dirección de expansión</td>
+         </tr>
+         <tr>
+          <td><code>expand</code></td>
+          <td>True/False</td>
+          <td>Si ocupa espacio extra</td>
+         </tr>
+         <tr>
+          <td><code>padx/pady</code></td>
+          <td>Número (píxeles)</td>
+          <td>Espacio externo</td>
+         </tr>
+        </tbody>
+       </table>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># pack() apila widgets verticalmente por defecto</span>
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"Arriba"</span>, bg=<span class="string">"red"</span>).<span class="function">pack</span>()
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"Centro"</span>, bg=<span class="string">"green"</span>).<span class="function">pack</span>()
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"Abajo"</span>, bg=<span class="string">"blue"</span>).<span class="function">pack</span>()
+
+<span class="comment"># Usar side para apilar horizontalmente</span>
+frame = tk.<span class="function">Frame</span>(ventana)
+frame.<span class="function">pack</span>()
+
+tk.<span class="function">Button</span>(frame, text=<span class="string">"Izq"</span>).<span class="function">pack</span>(side=<span class="string">"left"</span>, padx=<span class="number">5</span>)
+tk.<span class="function">Button</span>(frame, text=<span class="string">"Centro"</span>).<span class="function">pack</span>(side=<span class="string">"left"</span>, padx=<span class="number">5</span>)
+tk.<span class="function">Button</span>(frame, text=<span class="string">"Der"</span>).<span class="function">pack</span>(side=<span class="string">"left"</span>, padx=<span class="number">5</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">2. grid() - Sistema de Cuadrícula</h3>
+       <p class="text-gray-700 mb-4">Organiza widgets en filas y columnas como una tabla. Ideal para formularios.</p>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Parámetro</th>
+          <th>Descripción</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>row</code></td>
+          <td>Número de fila (empieza en 0)</td>
+         </tr>
+         <tr>
+          <td><code>column</code></td>
+          <td>Número de columna (empieza en 0)</td>
+         </tr>
+         <tr>
+          <td><code>rowspan</code></td>
+          <td>Cuántas filas ocupa</td>
+         </tr>
+         <tr>
+          <td><code>columnspan</code></td>
+          <td>Cuántas columnas ocupa</td>
+         </tr>
+         <tr>
+          <td><code>sticky</code></td>
+          <td>"n","s","e","w" o combinaciones</td>
+         </tr>
+         <tr>
+          <td><code>padx/pady</code></td>
+          <td>Espaciado externo</td>
+         </tr>
+        </tbody>
+       </table>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Formulario con grid</span>
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"Nombre:"</span>).<span class="function">grid</span>(row=<span class="number">0</span>, column=<span class="number">0</span>, sticky=<span class="string">"e"</span>)
+tk.<span class="function">Entry</span>(ventana).<span class="function">grid</span>(row=<span class="number">0</span>, column=<span class="number">1</span>, padx=<span class="number">5</span>, pady=<span class="number">5</span>)
+
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"Email:"</span>).<span class="function">grid</span>(row=<span class="number">1</span>, column=<span class="number">0</span>, sticky=<span class="string">"e"</span>)
+tk.<span class="function">Entry</span>(ventana).<span class="function">grid</span>(row=<span class="number">1</span>, column=<span class="number">1</span>, padx=<span class="number">5</span>, pady=<span class="number">5</span>)
+
+<span class="comment"># Botón que ocupa 2 columnas</span>
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Enviar"</span>).<span class="function">grid</span>(row=<span class="number">2</span>, column=<span class="number">0</span>, 
+                                      columnspan=<span class="number">2</span>, pady=<span class="number">10</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="tip-box"><strong>💡 Sticky en grid():</strong>
+        <ul class="list-disc ml-6 mt-2">
+         <li>"n" = North (arriba)</li>
+         <li>"s" = South (abajo)</li>
+         <li>"e" = East (derecha)</li>
+         <li>"w" = West (izquierda)</li>
+         <li>"nsew" = Expandir en todas direcciones</li>
+        </ul>
+       </div>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">3. place() - Posicionamiento Absoluto</h3>
+       <p class="text-gray-700 mb-4">Coloca widgets en coordenadas específicas. Menos usado pero útil para diseños precisos.</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+ventana.<span class="function">geometry</span>(<span class="string">"400x300"</span>)
+
+<span class="comment"># Posición absoluta en píxeles</span>
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"En (50, 50)"</span>, bg=<span class="string">"yellow"</span>).<span class="function">place</span>(x=<span class="number">50</span>, y=<span class="number">50</span>)
+
+<span class="comment"># Posición relativa (0.5 = 50% del ancho/alto)</span>
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Centro"</span>).<span class="function">place</span>(relx=<span class="number">0.5</span>, rely=<span class="number">0.5</span>, anchor=<span class="string">"center"</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 8: Calculadora Layout</h4>
+        <p class="text-gray-700 mb-2">Usando grid(), crea el layout de una calculadora:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Un Entry en la fila 0 que ocupe 4 columnas</li>
+         <li>Botones del 7-9 y + en fila 1</li>
+         <li>Botones del 4-6 y - en fila 2</li>
+         <li>Botones del 1-3 y * en fila 3</li>
+         <li>Botones 0, =, / en fila 4</li>
+        </ul>
+       </div>
+      </section><!-- Section 9: Variables de Control -->
+      <section id="variables" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">9. Variables de Control</h2>
+       <p class="text-gray-700 mb-4 leading-relaxed">Las variables de control son objetos especiales de Tkinter que vinculan automáticamente widgets con valores de Python. Cuando el widget cambia, la variable se actualiza automáticamente y viceversa.</p>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Tipos de Variables</h3>
+       <table class="param-table">
+        <thead>
+         <tr>
+          <th>Variable</th>
+          <th>Tipo de Dato</th>
+          <th>Uso Común</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><code>StringVar()</code></td>
+          <td>Cadenas de texto</td>
+          <td>Entry, Label, Radiobutton</td>
+         </tr>
+         <tr>
+          <td><code>IntVar()</code></td>
+          <td>Números enteros</td>
+          <td>Spinbox, Scale</td>
+         </tr>
+         <tr>
+          <td><code>DoubleVar()</code></td>
+          <td>Números decimales</td>
+          <td>Scale, Spinbox</td>
+         </tr>
+         <tr>
+          <td><code>BooleanVar()</code></td>
+          <td>Verdadero/Falso</td>
+          <td>Checkbutton</td>
+         </tr>
+        </tbody>
+       </table>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Métodos Principales</h3>
+       <ul class="list-disc ml-6 text-gray-700 space-y-2 mb-6">
+        <li><strong>get():</strong> Obtiene el valor actual</li>
+        <li><strong>set(valor):</strong> Establece un nuevo valor</li>
+        <li><strong>trace():</strong> Ejecuta una función cuando el valor cambia</li>
+       </ul>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Ejemplo con Entry</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Crear variable de control</span>
+texto_var = tk.<span class="function">StringVar</span>()
+texto_var.<span class="function">set</span>(<span class="string">"Texto inicial"</span>)  <span class="comment"># Valor por defecto</span>
+
+<span class="comment"># Vincular Entry con la variable</span>
+entrada = tk.<span class="function">Entry</span>(ventana, 
+                   textvariable=texto_var,  <span class="comment"># Nota: textvariable, no variable</span>
+                   width=<span class="number">30</span>)
+entrada.<span class="function">pack</span>(pady=<span class="number">10</span>)
+
+<span class="keyword">def</span> <span class="function">obtener_texto</span>():
+    <span class="function">print</span>(<span class="string">f"El texto es: {texto_var.get()}"</span>)
+
+<span class="keyword">def</span> <span class="function">cambiar_texto</span>():
+    texto_var.<span class="function">set</span>(<span class="string">"Texto cambiado desde botón"</span>)
+
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Obtener"</span>, command=obtener_texto).<span class="function">pack</span>()
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Cambiar"</span>, command=cambiar_texto).<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Ejemplo con Checkbutton</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+<span class="comment"># Variable booleana</span>
+acepto_var = tk.<span class="function">BooleanVar</span>()
+acepto_var.<span class="function">set</span>(<span class="keyword">False</span>)  <span class="comment"># Desmarcado por defecto</span>
+
+check = tk.<span class="function">Checkbutton</span>(ventana,
+                        text=<span class="string">"Acepto los t��rminos"</span>,
+                        variable=acepto_var)
+check.<span class="function">pack</span>(pady=<span class="number">10</span>)
+
+<span class="keyword">def</span> <span class="function">verificar</span>():
+    <span class="keyword">if</span> acepto_var.<span class="function">get</span>():
+        <span class="function">print</span>(<span class="string">"Términos aceptados ✓"</span>)
+    <span class="keyword">else</span>:
+        <span class="function">print</span>(<span class="string">"Debes aceptar los términos"</span>)
+
+tk.<span class="function">Button</span>(ventana, text=<span class="string">"Continuar"</span>, command=verificar).<span class="function">pack</span>()
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">trace() - Detectar Cambios Automáticamente</h3>
+       <p class="text-gray-700 mb-4">Con trace() puedes ejecutar una función cada vez que la variable cambia:</p>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+ventana = tk.<span class="function">Tk</span>()
+
+nombre_var = tk.<span class="function">StringVar</span>()
+
+<span class="comment"># Función que se ejecuta al cambiar la variable</span>
+<span class="keyword">def</span> <span class="function">en_cambio</span>(*args):
+    texto = nombre_var.<span class="function">get</span>()
+    etiqueta.<span class="function">config</span>(text=<span class="string">f"Escribiste: {texto}"</span>)
+
+<span class="comment"># "w" = write (cuando se escribe/modifica)</span>
+nombre_var.<span class="function">trace</span>(<span class="string">"w"</span>, en_cambio)
+
+tk.<span class="function">Label</span>(ventana, text=<span class="string">"Escribe tu nombre:"</span>).<span class="function">pack</span>()
+tk.<span class="function">Entry</span>(ventana, textvariable=nombre_var).<span class="function">pack</span>()
+
+etiqueta = tk.<span class="function">Label</span>(ventana, text=<span class="string">""</span>, fg=<span class="string">"blue"</span>)
+etiqueta.<span class="function">pack</span>(pady=<span class="number">10</span>)
+
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="tip-box"><strong>💡 ¿Cuándo usar variables de control?</strong>
+        <ul class="list-disc ml-6 mt-2">
+         <li>Cuando necesites sincronización automática entre widgets</li>
+         <li>Para validación en tiempo real con trace()</li>
+         <li>Cuando múltiples widgets compartan el mismo valor</li>
+        </ul>
+       </div>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Ejercicio 9: Conversor de Temperatura</h4>
+        <p class="text-gray-700 mb-2">Crea un conversor Celsius ↔ Fahrenheit usando variables de control:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Entry para Celsius vinculado a un DoubleVar</li>
+         <li>Entry para Fahrenheit vinculado a otro DoubleVar</li>
+         <li>Usa trace() para que al cambiar uno, el otro se actualice automáticamente</li>
+         <li>Fórmulas: F = C * 9/5 + 32, C = (F - 32) * 5/9</li>
+        </ul>
+       </div>
+      </section><!-- Section 10: Proyectos -->
+      <section id="proyectos" class="content-section bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-3xl font-bold text-gray-800 mb-4">10. Mini Proyectos</h2>
+       <p class="text-gray-700 mb-6 leading-relaxed">Ahora que conoces los fundamentos, vamos a crear aplicaciones completas que integren todo lo aprendido. Estos proyectos te ayudarán a consolidar tus conocimientos.</p>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Proyecto 1: Lista de Tareas (Todo List)</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+<span class="keyword">from</span> tkinter <span class="keyword">import</span> messagebox
+
+<span class="keyword">class</span> <span class="function">TodoApp</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, ventana):
+        self.ventana = ventana
+        self.ventana.<span class="function">title</span>(<span class="string">"📝 Lista de Tareas"</span>)
+        self.ventana.<span class="function">geometry</span>(<span class="string">"400x500"</span>)
+        self.ventana.<span class="function">config</span>(bg=<span class="string">"#f0f0f0"</span>)
+        
+        <span class="comment"># Frame superior para entrada</span>
+        frame_entrada = tk.<span class="function">Frame</span>(self.ventana, bg=<span class="string">"#f0f0f0"</span>)
+        frame_entrada.<span class="function">pack</span>(pady=<span class="number">10</span>)
+        
+        self.entrada = tk.<span class="function">Entry</span>(frame_entrada, width=<span class="number">30</span>, font=(<span class="string">"Arial"</span>, <span class="number">12</span>))
+        self.entrada.<span class="function">pack</span>(side=<span class="string">"left"</span>, padx=<span class="number">5</span>)
+        self.entrada.<span class="function">bind</span>(<span class="string">"&lt;Return&gt;"</span>, <span class="keyword">lambda</span> e: self.<span class="function">agregar_tarea</span>())
+        
+        btn_agregar = tk.<span class="function">Button</span>(frame_entrada, text=<span class="string">"➕ Agregar"</span>,
+                                command=self.agregar_tarea,
+                                bg=<span class="string">"#4CAF50"</span>, fg=<span class="string">"white"</span>)
+        btn_agregar.<span class="function">pack</span>(side=<span class="string">"left"</span>)
+        
+        <span class="comment"># Listbox para tareas</span>
+        self.listbox = tk.<span class="function">Listbox</span>(self.ventana, 
+                                  width=<span class="number">40</span>, height=<span class="number">15</span>,
+                                  font=(<span class="string">"Arial"</span>, <span class="number">11</span>))
+        self.listbox.<span class="function">pack</span>(pady=<span class="number">10</span>)
+        
+        <span class="comment"># Frame para botones de acción</span>
+        frame_botones = tk.<span class="function">Frame</span>(self.ventana, bg=<span class="string">"#f0f0f0"</span>)
+        frame_botones.<span class="function">pack</span>()
+        
+        tk.<span class="function">Button</span>(frame_botones, text=<span class="string">"❌ Eliminar"</span>,
+                  command=self.eliminar_tarea,
+                  bg=<span class="string">"#f44336"</span>, fg=<span class="string">"white"</span>, width=<span class="number">12</span>).<span class="function">pack</span>(side=<span class="string">"left"</span>, padx=<span class="number">5</span>)
+        
+        tk.<span class="function">Button</span>(frame_botones, text=<span class="string">"🗑️ Limpiar Todo"</span>,
+                  command=self.limpiar_todo,
+                  bg=<span class="string">"#FF9800"</span>, fg=<span class="string">"white"</span>, width=<span class="number">12</span>).<span class="function">pack</span>(side=<span class="string">"left"</span>)
+        
+    <span class="keyword">def</span> <span class="function">agregar_tarea</span>(self):
+        tarea = self.entrada.<span class="function">get</span>()
+        <span class="keyword">if</span> tarea:
+            self.listbox.<span class="function">insert</span>(tk.END, tarea)
+            self.entrada.<span class="function">delete</span>(<span class="number">0</span>, tk.END)
+        <span class="keyword">else</span>:
+            messagebox.<span class="function">showwarning</span>(<span class="string">"Advertencia"</span>, 
+                                   <span class="string">"Escribe una tarea"</span>)
+    
+    <span class="keyword">def</span> <span class="function">eliminar_tarea</span>(self):
+        <span class="keyword">try</span>:
+            indice = self.listbox.<span class="function">curselection</span>()[<span class="number">0</span>]
+            self.listbox.<span class="function">delete</span>(indice)
+        <span class="keyword">except</span>:
+            messagebox.<span class="function">showwarning</span>(<span class="string">"Advertencia"</span>, 
+                                   <span class="string">"Selecciona una tarea"</span>)
+    
+    <span class="keyword">def</span> <span class="function">limpiar_todo</span>(self):
+        self.listbox.<span class="function">delete</span>(<span class="number">0</span>, tk.END)
+
+ventana = tk.<span class="function">Tk</span>()
+app = <span class="function">TodoApp</span>(ventana)
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <h3 class="text-2xl font-semibold text-gray-700 mt-8 mb-3">Proyecto 2: Calculadora Simple</h3>
+       <pre class="code-block"><code><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk
+
+<span class="keyword">class</span> <span class="function">Calculadora</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, ventana):
+        self.ventana = ventana
+        self.ventana.<span class="function">title</span>(<span class="string">"🔢 Calculadora"</span>)
+        self.ventana.<span class="function">geometry</span>(<span class="string">"300x400"</span>)
+        self.ventana.<span class="function">resizable</span>(<span class="keyword">False</span>, <span class="keyword">False</span>)
+        
+        self.expresion = <span class="string">""</span>
+        
+        <span class="comment"># Display</span>
+        self.texto_var = tk.<span class="function">StringVar</span>()
+        display = tk.<span class="function">Entry</span>(ventana, textvariable=self.texto_var,
+                         font=(<span class="string">"Arial"</span>, <span class="number">20</span>), bd=<span class="number">10</span>,
+                         justify=<span class="string">"right"</span>, state=<span class="string">"readonly"</span>)
+        display.<span class="function">grid</span>(row=<span class="number">0</span>, column=<span class="number">0</span>, columnspan=<span class="number">4</span>, sticky=<span class="string">"nsew"</span>)
+        
+        <span class="comment"># Botones</span>
+        botones = [
+            [<span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>, <span class="string">'/'</span>],
+            [<span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'*'</span>],
+            [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'-'</span>],
+            [<span class="string">'C'</span>, <span class="string">'0'</span>, <span class="string">'='</span>, <span class="string">'+'</span>]
+        ]
+        
+        <span class="keyword">for</span> i, fila <span class="keyword">in</span> <span class="function">enumerate</span>(botones, start=<span class="number">1</span>):
+            <span class="keyword">for</span> j, boton <span class="keyword">in</span> <span class="function">enumerate</span>(fila):
+                comando = <span class="keyword">lambda</span> x=boton: self.<span class="function">click</span>(x)
+                tk.<span class="function">Button</span>(ventana, text=boton, font=(<span class="string">"Arial"</span>, <span class="number">18</span>),
+                          command=comando, bg=<span class="string">"#e0e0e0"</span>).<span class="function">grid</span>(
+                              row=i, column=j, sticky=<span class="string">"nsew"</span>, padx=<span class="number">2</span>, pady=<span class="number">2</span>)
+        
+        <span class="comment"># Configurar pesos de filas/columnas para expansión</span>
+        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(<span class="number">5</span>):
+            ventana.<span class="function">grid_rowconfigure</span>(i, weight=<span class="number">1</span>)
+        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(<span class="number">4</span>):
+            ventana.<span class="function">grid_columnconfigure</span>(i, weight=<span class="number">1</span>)
+    
+    <span class="keyword">def</span> <span class="function">click</span>(self, boton):
+        <span class="keyword">if</span> boton == <span class="string">'C'</span>:
+            self.expresion = <span class="string">""</span>
+        <span class="keyword">elif</span> boton == <span class="string">'='</span>:
+            <span class="keyword">try</span>:
+                resultado = <span class="function">str</span>(<span class="function">eval</span>(self.expresion))
+                self.expresion = resultado
+            <span class="keyword">except</span>:
+                self.expresion = <span class="string">"Error"</span>
+        <span class="keyword">else</span>:
+            self.expresion += boton
+        
+        self.texto_var.<span class="function">set</span>(self.expresion)
+
+ventana = tk.<span class="function">Tk</span>()
+app = <span class="function">Calculadora</span>(ventana)
+ventana.<span class="function">mainloop</span>()
+</code></pre>
+       <div class="exercise-box">
+        <h4 class="text-xl font-bold text-gray-800 mb-3">🎯 Proyecto Final: Bloc de Notas</h4>
+        <p class="text-gray-700 mb-2">Crea una aplicación de bloc de notas completa con:</p>
+        <ul class="list-disc ml-6 text-gray-700">
+         <li>Widget Text para escribir</li>
+         <li>Menú con opciones: Nuevo, Guardar, Abrir, Salir</li>
+         <li>Botones para formato: Negrita, Cursiva, Subrayado</li>
+         <li>Contador de palabras en tiempo real</li>
+         <li>Usa FileDialog para guardar/abrir archivos</li>
+        </ul>
+        <p class="text-gray-600 mt-3 italic">Pista: Investiga tkinter.filedialog y los tags del widget Text</p>
+       </div>
+       <div class="tip-box mt-6"><strong>🎉 ¡Felicidades!</strong>
+        <p class="mt-2">Has completado el tutorial de Tkinter. Ahora tienes las herramientas para crear tus propias aplicaciones con interfaz gráfica. La mejor forma de seguir aprendiendo es practicar creando tus propios proyectos.</p>
+        <p class="mt-2"><strong>Recursos adicionales:</strong></p>
+        <ul class="list-disc ml-6 mt-2">
+         <li>Documentación oficial de Tkinter</li>
+         <li>Explora bibliotecas como CustomTkinter para interfaces modernas</li>
+         <li>Practica combinando Tkinter con otras librerías de Python</li>
+        </ul>
+        <p></p>
+       </div>
+      </section>
+     </div>
+    </main>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            main_title: "Tutorial Interactivo de Tkinter",
+            subtitle: "Aprende a crear interfaces gráficas con Python"
+        };
+
+        let completedSections = new Set();
+        const totalSections = 10;
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const navSections = document.querySelectorAll('.nav-section');
+            navSections.forEach(nav => nav.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            const navItems = document.querySelectorAll('.nav-section');
+            navItems.forEach(nav => {
+                if (nav.getAttribute('onclick').includes(sectionId)) {
+                    nav.classList.add('active');
+                }
+            });
+            
+            completedSections.add(sectionId);
+            updateProgress();
+            
+            // Hacer scroll al inicio del área de contenido principal
+            const mainContent = document.querySelector('main');
+            if (mainContent) {
+                mainContent.scrollTop = 0;
+            }
+        }
+
+        function updateProgress() {
+            const progress = (completedSections.size / totalSections) * 100;
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `Progreso: ${Math.round(progress)}% completado (${completedSections.size}/${totalSections} secciones visitadas)`;
+        }
+
+        async function onConfigChange(config) {
+            const mainTitle = document.getElementById('main-title');
+            const subtitle = document.getElementById('subtitle');
+            
+            mainTitle.textContent = config.main_title || defaultConfig.main_title;
+            subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["main_title", config.main_title || defaultConfig.main_title],
+                    ["subtitle", config.subtitle || defaultConfig.subtitle]
+                ])
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b699bc187380bf3',t:'MTc2NzE4MjM0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
